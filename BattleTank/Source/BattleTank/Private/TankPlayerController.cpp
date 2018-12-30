@@ -37,52 +37,57 @@ void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControlledTank()) { return; }
 
-	FVector HitLocation; //Out Parameter
-	if (GetSightRayHitLocation(HitLocation))
+	auto HitLocation = FVector(0); //Out Parameter
+	if (GetSightRayHitLocation(HitLocation)) //performs linetrace
 	{
-		// Calcualte trajectory to target
-		// move barrel towards calcualted trajectory
-		//UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString());
+		return;
 	};
 
 }
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
-	FVector TraceDirection;
-	//find crosshair position
+	// translate crosshair position to pixel coordinates
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
-	auto ScreenLocation = FVector2D (ViewportSizeX*CrossHairXLocation,
-		ViewportSizeY*CrossHairYLocation);
-	
+	auto ScreenLocation = FVector2D(ViewportSizeX*CrossHairXLocation, ViewportSizeY*CrossHairYLocation);
+
 	//deproject
-	if (GetLookDirection(ScreenLocation, TraceDirection))
+	FVector TraceDirection;
+	if (GetTraceDirection(ScreenLocation, TraceDirection))
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Crosshair at: %s"), *ScreenLocation.ToString());
+		GetLookVectorHitLocation(TraceDirection, HitLocation);
 	}
-	
-	// return bool
-	return true;	
+
+	return true;
 }
 
-bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& TraceDirection) const
+bool ATankPlayerController::GetLookVectorHitLocation(FVector TraceDirection, FVector& HitLocation) const
+{
+	FHitResult HitResult;
+	auto StartLocation = PlayerCameraManager->GetCameraLocation();
+	auto EndLocation = StartLocation + (TraceDirection * LineTraceRange);
+	if (GetWorld()->LineTraceSingleByChannel(
+		HitResult,
+		StartLocation,
+		EndLocation,
+		ECollisionChannel::ECC_WorldStatic)
+		)
+	{
+		HitLocation = HitResult.Location;
+		//UE_LOG(LogTemp, Warning, TEXT("Crosshair at: %s"), *HitLocation.ToString());
+		return true;
+	}
+	return false;
+}
+
+bool ATankPlayerController::GetTraceDirection(FVector2D ScreenLocation, FVector& TraceDirection) const
 {
 	FVector TraceStart; // To be discarded
-	DeprojectScreenPositionToWorld(ScreenLocation.X,
+	DeprojectScreenPositionToWorld(
+		ScreenLocation.X,
 		ScreenLocation.Y,
-		TraceStart, //out
-		TraceDirection);
-	//DrawDebugLine
-	(
-		GetWorld(),
 		TraceStart,
-		TraceStart + (100.f*TraceDirection),
-		FColor(255, 0, 0),
-		false,
-		0.1f,
-		1,
-		5.0f
-	);
-	return false;
+		TraceDirection);
+	return true;
 }
