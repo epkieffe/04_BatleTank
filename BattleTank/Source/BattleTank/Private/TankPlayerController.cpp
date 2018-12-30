@@ -40,7 +40,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 	auto HitLocation = FVector(0); //Out Parameter
 	if (GetSightRayHitLocation(HitLocation)) //performs linetrace
 	{
-		return;
+		GetControlledTank()->AimAt(HitLocation);
 	};
 
 }
@@ -71,11 +71,10 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector TraceDirection, FVe
 		HitResult,
 		StartLocation,
 		EndLocation,
-		ECollisionChannel::ECC_WorldStatic)
+		ECollisionChannel::ECC_Visibility)
 		)
 	{
 		HitLocation = HitResult.Location;
-		//UE_LOG(LogTemp, Warning, TEXT("Crosshair at: %s"), *HitLocation.ToString());
 		return true;
 	}
 	return false;
