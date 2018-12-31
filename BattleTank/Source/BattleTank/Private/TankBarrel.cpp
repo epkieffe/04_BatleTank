@@ -4,8 +4,17 @@
 #include "Runtime/Engine/Classes/Engine/World.h"
 
 
-void  UTankBarrel::Elevate(float DegreesPerSecond)
+void  UTankBarrel::Elevate(float WishAngleDeltaDegrees)
 {
-	
-}
+	float WishAngleClamped = FMath::Clamp(
+		WishAngleDeltaDegrees,
+		MinElevationDegrees,
+		MaxElevationDegrees);
+	float WishOmegaClamped = FMath::Clamp(
+		WishAngleClamped * GetWorld()->DeltaTimeSeconds,
+		-MaxDegreesPerSecond,
+		MaxDegreesPerSecond);
 
+	AddRelativeRotation(FRotator(WishOmegaClamped, 0, 0));
+
+}
