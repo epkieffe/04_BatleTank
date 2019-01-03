@@ -7,11 +7,11 @@
 void  UTankTurret::Rotate(float WishAngleDeltaDegrees)
 {
 	float WishOmegaClamped = FMath::Clamp(
-		WishAngleDeltaDegrees * GetWorld()->DeltaTimeSeconds,
+		(1 / GetWorld()->DeltaTimeSeconds) * WishAngleDeltaDegrees,
 		-MaxDegreesPerSecond,
 		MaxDegreesPerSecond);
 
-	AddRelativeRotation(FRotator(0, WishOmegaClamped, 0));
+	AddRelativeRotation(FRotator(0, WishOmegaClamped * GetWorld()->DeltaTimeSeconds, 0));
 
 }
 

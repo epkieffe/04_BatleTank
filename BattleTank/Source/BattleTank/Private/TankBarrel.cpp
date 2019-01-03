@@ -6,15 +6,11 @@
 
 void  UTankBarrel::Elevate(float WishAngleDeltaDegrees)
 {
-	float WishAngleClamped = FMath::Clamp(
-		WishAngleDeltaDegrees,
-		MinElevationDegrees,
-		MaxElevationDegrees);
 	float WishOmegaClamped = FMath::Clamp(
-		WishAngleClamped * GetWorld()->DeltaTimeSeconds,
+		(1/ GetWorld()->DeltaTimeSeconds) * WishAngleDeltaDegrees,
 		-MaxDegreesPerSecond,
 		MaxDegreesPerSecond);
 
-	AddRelativeRotation(FRotator(WishOmegaClamped, 0, 0));
+	AddRelativeRotation(FRotator(WishOmegaClamped * GetWorld()->DeltaTimeSeconds, 0, 0));
 
 }
