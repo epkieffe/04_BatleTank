@@ -30,8 +30,10 @@ private:
 
 	UTankTurret* Turret = nullptr;
 
-	void MoveBarrel(FVector AimDirection);
+	//void MoveBarrel(FVector AimDirection);
 
-	void MoveTurret(FVector AimDirection);
+	//void MoveTurret(FVector AimDirection);
+
+	void MoveWeapon(FVector LaunchDirection);
 
 };

@@ -14,11 +14,11 @@ class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
 	GENERATED_BODY()
 	
 public:
-	void  Elevate(float WishAngleDeltaDegrees);
+	void  Elevate(FVector WishAngleWithDeltaTime); // encoded as yaw, pitch, time
 	
 private:
 	UPROPERTY(EditAnywhere, Category = Setup)
-		float MaxDegreesPerSecond = 20;
+		float MaxDegreesPerSecond = 15;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
 		float MaxElevationDegrees = 45;

@@ -3,6 +3,7 @@
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
@@ -17,11 +18,13 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
+	if (!BarrelToSet) { return; }
 	Barrel = BarrelToSet;
 }
 
 void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 {
+	if (!TurretToSet) { return; }
 	Turret = TurretToSet;
 }
 
@@ -44,8 +47,9 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		)
 	{
 		LaunchDirection = OutLaunchVelocity.GetSafeNormal();
-		MoveBarrel(LaunchDirection);
-		MoveTurret(LaunchDirection);
+		MoveWeapon(LaunchDirection);
+		//MoveBarrel(LaunchDirection);
+		//MoveTurret(LaunchDirection);
 		auto Time = GetWorld()->GetTimeSeconds();
 		UE_LOG(LogTemp, Warning, TEXT("%f Aim at %s"), Time, *LaunchDirection.ToString());
 	}
@@ -56,18 +60,13 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	}
 }
 
-void UTankAimingComponent::MoveBarrel(FVector AimDirection)
-{	//get current barrel orientation
-	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
-	auto AimAsRotator = AimDirection.Rotation();
-	Barrel->Elevate(AimDirection.Rotation().Pitch-BarrelRotator.Pitch);
-	return;
-}
+void UTankAimingComponent::MoveWeapon(FVector LaunchDirection)
+{
+	FVector WishAngleWithDeltaTime;
+	WishAngleWithDeltaTime.X = LaunchDirection.Rotation().Yaw;
+	WishAngleWithDeltaTime.Y = LaunchDirection.Rotation().Pitch;
+	WishAngleWithDeltaTime.Z = GetWorld()->DeltaTimeSeconds;
 
-void UTankAimingComponent::MoveTurret(FVector AimDirection)
-{	//get current barrel orientation
-	auto TurretRotator = Turret->GetForwardVector().Rotation();
-	auto AimAsRotator = AimDirection.Rotation();
-	Turret->Rotate(AimDirection.Rotation().Yaw-TurretRotator.Yaw);
-	return;
+	Barrel->Elevate(WishAngleWithDeltaTime);
+	Turret->Rotate(WishAngleWithDeltaTime);
 }
