@@ -16,5 +16,5 @@ void  UTankBarrel::Elevate(FVector WishAngleWithDeltaTime) // encoded as yaw, pi
 		-MaxDegreesPerSecond,
 		MaxDegreesPerSecond);
 
-	AddRelativeRotation(FRotator(WishOmegaClamped * WishAngleWithDeltaTime.Z, 0, 0));
+	AddRelativeRotation(FRotator(WishOmegaClamped * DeltaTime, 0, 0));
 }

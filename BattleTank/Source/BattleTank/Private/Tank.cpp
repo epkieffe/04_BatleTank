@@ -10,7 +10,7 @@
 ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	//no need to protect, added at construction
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("AimingComponent"));
@@ -28,6 +28,11 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void ATank::Fire() const
+{
+	UE_LOG(LogTemp, Warning, TEXT("Fired projectile!"));
 }
 
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)

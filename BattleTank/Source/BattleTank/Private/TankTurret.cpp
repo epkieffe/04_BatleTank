@@ -12,5 +12,4 @@ void  UTankTurret::Rotate(FVector WishAngleWithDeltaTime) // encoded as yaw, pit
 		MaxDegreesPerSecond);
 
 	AddRelativeRotation(FRotator(0, WishOmegaClamped * DeltaTime, 0));
-
 }
