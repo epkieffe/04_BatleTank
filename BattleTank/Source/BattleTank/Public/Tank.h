@@ -29,6 +29,9 @@ public:
 
 	void AimAt(FVector HitLocation);
 
+	UFUNCTION(BlueprintCallable, Category = Firing)
+		void Fire();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -42,11 +45,12 @@ private:
 	UPROPERTY(EditAnywhere, Category = Firing)
 		float LaunchSpeed = 8000; //TODO find sensible value
 
-	UFUNCTION(BlueprintCallable, Category = Firing)
-		void Fire() const;
-
 	UPROPERTY(EditAnywhere, Category = Firing)
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UTankBarrel* Barrel = nullptr;
+
+	float RelaodTimeInSeconds = 3;
+
+	double LastFireTime = -3;
 };
