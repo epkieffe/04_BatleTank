@@ -26,7 +26,6 @@ void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	AimTowardsCrosshair();
-	//UE_LOG(LogTemp, Warning, TEXT("%s ticking"), *GetControlledTank()->GetName());
 }
 
 ATank* ATankPlayerController::GetControlledTank() const

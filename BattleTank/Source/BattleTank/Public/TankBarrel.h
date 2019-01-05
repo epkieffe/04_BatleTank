@@ -6,8 +6,9 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankBarrel.generated.h"
 
-
-
+/**
+ * TankBarrel is used to limit pitch range and move the barrel
+ */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
 {
@@ -18,7 +19,7 @@ public:
 	
 private:
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
-		float MaxDegreesPerSecond = 15;
+		float MaxDegreesPerSecond = 20;
 
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 		float MaxElevationDegrees = 45;

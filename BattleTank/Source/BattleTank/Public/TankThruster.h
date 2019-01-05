@@ -7,14 +7,14 @@
 #include "TankThruster.generated.h"
 
 /**
- * 
+ * TankThruster is used to apply forces to the tank
  */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankThruster : public UStaticMeshComponent
 {
 	GENERATED_BODY()
-	
-	
-	
-	
+
+
+
+
 };

@@ -48,8 +48,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	{
 		LaunchDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveWeapon(LaunchDirection);
-		//MoveBarrel(LaunchDirection);
-		//MoveTurret(LaunchDirection);
 	}
 }
 

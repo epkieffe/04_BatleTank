@@ -6,8 +6,9 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankTurret.generated.h"
 
-
-
+/**
+ * TankTurret is used to move the turret
+ */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankTurret : public UStaticMeshComponent
 {
@@ -18,6 +19,6 @@ public:
 	
 private:
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
-		float MaxDegreesPerSecond = 25;
+		float MaxDegreesPerSecond = 40;
 	
 };
