@@ -22,5 +22,9 @@ public:
 	// Max force per track, in Newtons
 	UPROPERTY(EditDefaultsOnly)
 		float TrackMaxDrivingForce = 50000000;
+
+	// Max speed in cm per second
+	UPROPERTY(EditDefaultsOnly)
+		float MaxSpeed = 3200;
 	
 };

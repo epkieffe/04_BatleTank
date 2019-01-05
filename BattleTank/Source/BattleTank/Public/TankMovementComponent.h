@@ -6,15 +6,29 @@
 #include "GameFramework/NavMovementComponent.h"
 #include "TankMovementComponent.generated.h"
 
+class UTankTrack;
 /**
  * 
  */
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
 {
 	GENERATED_BODY()
+
+public:
+	// Sets a throttle between -1 and +1
+	UFUNCTION(BlueprintCallable, Category = Setup)
+		void WishForward(float Throw);
+
+	// Sets a throttle between -1 and +1
+	UFUNCTION(BlueprintCallable, Category = Setup)
+		void WishTurn(float Throw);
+
+	UFUNCTION(BlueprintCallable, Category = Input)
+		void Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
 	
-	
-	
+private:
+	UTankTrack* LeftTrack = nullptr;
+	UTankTrack* RightTrack = nullptr;
 	
 };
