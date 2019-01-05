@@ -36,7 +36,7 @@ void ATank::Fire()
 {
 	bool bIsReloaded = (FPlatformTime::Seconds() - LastFireTime) > RelaodTimeInSeconds;
 
-	if (Barrel && bIsReloaded)
+	if (Barrel && ProjectileBlueprint && bIsReloaded)
 	{
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBlueprint,

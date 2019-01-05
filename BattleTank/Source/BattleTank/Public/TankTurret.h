@@ -17,7 +17,7 @@ public:
 	void  Rotate(FVector WishAngleWithDeltaTime); // encoded as yaw, pitch, time
 	
 private:
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 		float MaxDegreesPerSecond = 25;
 	
 };
