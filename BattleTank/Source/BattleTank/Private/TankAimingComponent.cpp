@@ -5,6 +5,7 @@
 #include "TankTurret.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Kismet/GameplayStatics.h"
+#include "TankAimingComponent.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -37,7 +38,7 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 }
 */
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	if (!ensure(Barrel && Turret)) { return; }
 

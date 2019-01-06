@@ -5,8 +5,6 @@
 #include "TankTurret.h"
 #include "Projectile.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
-#include "TankAimingComponent.h"
-
 
 // Sets default values
 ATank::ATank()
@@ -19,8 +17,6 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 // Called to bind functionality to input
@@ -30,12 +26,6 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }*/ //TODO marked for deletion
-
-void ATank::AimAt(FVector HItLocation)
-{
-	if (!ensure(TankAimingComponent)) { return; }
-	TankAimingComponent->AimAt(HItLocation, LaunchSpeed);
-}
 
 void ATank::Fire()
 {
@@ -52,7 +42,7 @@ void ATank::Fire()
 				FName("Projectile"))
 			);
 
-		Projectile->LaunchProjectile(LaunchSpeed);
+		//Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }

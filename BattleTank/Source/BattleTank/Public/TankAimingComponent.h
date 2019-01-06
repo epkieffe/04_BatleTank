@@ -16,6 +16,7 @@ enum class EFiringState : uint8
 };
 
 //Forward Declarations
+class UTankAimingComponent;
 class UTankBarrel;
 class UTankTurret;
 
@@ -35,16 +36,21 @@ public:
 
 	void SetTurretReference(UTankTurret* TurretToSet);*/
 
-	void AimAt(FVector HitLocation, float LaunchSpeed);
+	void AimAt(FVector HitLocation);
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 		EFiringState FiringState = EFiringState::Aiming;
 
+	UPROPERTY(BlueprintReadOnly)
+		UTankAimingComponent* TankAimingComponent = nullptr;
+
 private:
 	UTankBarrel* Barrel = nullptr;
-
 	UTankTurret* Turret = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float LaunchSpeed = 8000; //TODO find sensible value
 
 	void MoveWeapon(FVector LaunchDirection);
 

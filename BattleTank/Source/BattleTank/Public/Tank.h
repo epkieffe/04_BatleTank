@@ -7,7 +7,6 @@
 #include "Tank.generated.h"
 
 //Forward Declarations
-class UTankAimingComponent;
 class UTankBarrel;
 class UTankTurret;
 class AProjectile;
@@ -27,14 +26,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void SetTurretReference(UTankTurret* TurretToSet);*/
 
-	void AimAt(FVector HitLocation);
-
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 		void Fire();
-
-protected:
-	UPROPERTY(BlueprintReadOnly)
-		UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:	
 	// Called to bind functionality to input
@@ -42,9 +35,6 @@ private:
 //	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
 	virtual void BeginPlay()  override;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float LaunchSpeed = 8000; //TODO find sensible value
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		TSubclassOf<AProjectile> ProjectileBlueprint;
