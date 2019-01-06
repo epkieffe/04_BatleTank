@@ -17,19 +17,19 @@ class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
 
 public:
 	// Sets a throttle between -1 and +1
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void WishForward(float Throw);
 
 	// Sets a throttle between -1 and +1
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void WishTurn(float Throw);
 
-	UFUNCTION(BlueprintCallable, Category = Input)
+	UFUNCTION(BlueprintCallable, Category = "Input")
 		void Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
 	
+private:
 	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
-private:
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
 	

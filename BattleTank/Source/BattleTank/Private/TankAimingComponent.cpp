@@ -16,6 +16,14 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
+{
+	if (!ensure(BarrelToSet && TurretToSet)) { return; }
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;
+}
+
+/* May be useful for swapping barrels
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	if (!BarrelToSet) { return; }
@@ -27,11 +35,12 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 	if (!TurretToSet) { return; }
 	Turret = TurretToSet;
 }
+*/
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	if (!Barrel) { return; }
-	if (!Turret) { return; }
+	if (!ensure(Barrel && Turret)) { return; }
+
 	auto OutLaunchVelocity = FVector(0);
 	auto LaunchDirection = FVector(0);
 	if (UGameplayStatics::SuggestProjectileVelocity(
