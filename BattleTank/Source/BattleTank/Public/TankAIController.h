@@ -6,7 +6,7 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-//Forward Declarations
+// Forward Declarations
 class ATank;
 
 UCLASS()
@@ -16,7 +16,12 @@ class BATTLETANK_API ATankAIController : public AAIController
 public:
 	virtual void BeginPlay() override;
 
-	//called every frame
+	// called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	// How close the AI tank can get in cm
+	UPROPERTY(EditDefaultsOnly)
+	float AcceptanceRadius = 3000;
 
 };

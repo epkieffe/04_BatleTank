@@ -8,9 +8,6 @@ void UTankTrack::SetThrottle(float Throttle)
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
-
-	auto Name = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s intend move forward %f"), *Name, Throttle);
 }
 
 
