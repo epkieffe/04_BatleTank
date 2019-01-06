@@ -7,9 +7,7 @@
 #include "Tank.generated.h"
 
 //Forward Declarations
-class UTankBarrel;
-class UTankTurret;
-class AProjectile;
+
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -26,23 +24,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void SetTurretReference(UTankTurret* TurretToSet);*/
 
-	UFUNCTION(BlueprintCallable, Category = "Firing")
-		void Fire();
-
 private:	
-	// Called to bind functionality to input
-	// TODO marked for deletion
-//	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
 	virtual void BeginPlay()  override;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		TSubclassOf<AProjectile> ProjectileBlueprint;
-
-	UTankBarrel* Barrel = nullptr;
-
-	float RelaodTimeInSeconds = 3;
-
-	double LastFireTime = -3;
 
 };
