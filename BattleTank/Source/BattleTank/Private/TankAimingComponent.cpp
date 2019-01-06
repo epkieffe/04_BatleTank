@@ -18,11 +18,31 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+void UTankAimingComponent::BeginPlay()
+{
+	FiringState = EFiringState::Reloading;
+}
+
 void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
 	if (!ensure(BarrelToSet && TurretToSet)) { return; }
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
+}
+
+void UTankAimingComponent::TickComponent(float DeltaTime,
+	enum ELevelTick TickType,
+	FActorComponentTickFunction *ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	
+	if ((FPlatformTime::Seconds() - LastFireTime) < Barrel->CooldownSeconds)
+	{
+		FiringState = EFiringState::Reloading;
+	}
+	else if (IsBarrelLocked()) { FiringState = EFiringState::Locked; }
+	else { FiringState = EFiringState::Aiming; }
+	//UE_LOG(LogTemp, Warning, TEXT("%s firing state: %f"), *GetOwner()->GetName(), FVector::DotProduct(LaunchDirection, Barrel->GetForwardVector()))
 }
 
 /* May be useful for swapping barrels
@@ -39,12 +59,22 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 }
 */
 
+bool UTankAimingComponent::IsBarrelLocked()
+{
+	if (FVector::DotProduct(LaunchDirection, Barrel->GetForwardVector()) > LockTolerance)
+	{
+		return true;
+	}
+	else { return false; }
+}
+
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
-	if (!ensure(Barrel && Turret)) { return; }
+	if (!ensure(Barrel)) { return; }
+	if (!ensure(Turret)) { return; }
 
 	auto OutLaunchVelocity = FVector(0);
-	auto LaunchDirection = FVector(0);
+
 	if (UGameplayStatics::SuggestProjectileVelocity(
 			GetOwner(),
 			OutLaunchVelocity,
@@ -75,10 +105,10 @@ void UTankAimingComponent::MoveWeapon(FVector LaunchDirection)
 
 void UTankAimingComponent::Fire()
 {
-	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
-	bool bIsReloaded = (FPlatformTime::Seconds() - LastFireTime) > RelaodTimeInSeconds;
+	if (!ensure(Barrel)) { return; }
+	if (!ensure(ProjectileBlueprint)) { return; }
 
-	if (bIsReloaded)
+	if (FiringState != EFiringState::Reloading)
 	{
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBlueprint,
@@ -90,5 +120,6 @@ void UTankAimingComponent::Fire()
 
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
+		FiringState = EFiringState::Reloading;
 	}
 }

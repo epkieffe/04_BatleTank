@@ -43,6 +43,8 @@ public:
 		void Fire();
 
 protected:
+	virtual void BeginPlay() override;
+
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 		EFiringState FiringState = EFiringState::Aiming;
 
@@ -56,13 +58,22 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float LaunchSpeed = 8000; //TODO find sensible value
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float LockTolerance = 0.999; //TODO find sensible value
+
+	FVector LaunchDirection = FVector(0);
+
+	bool IsBarrelLocked();
+
+	virtual void TickComponent(float DeltaTime,
+		enum ELevelTick TickType,
+		FActorComponentTickFunction *ThisTickFunction) override;
+	
 	void MoveWeapon(FVector LaunchDirection);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 
-	float RelaodTimeInSeconds = 3;
-
-	double LastFireTime = -3;
+	double LastFireTime = 0;
 
 };

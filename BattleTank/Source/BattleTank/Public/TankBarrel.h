@@ -17,6 +17,8 @@ class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
 public:
 	void  Elevate(FVector WishAngleWithDeltaTime); // encoded as yaw, pitch, time
 	
+	double CooldownSeconds = 3.0;
+
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float MaxDegreesPerSecond = 20;
