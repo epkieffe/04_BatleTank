@@ -59,7 +59,7 @@ private:
 		float LaunchSpeed = 8000; //TODO find sensible value
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float LockTolerance = 0.9999; //TODO find sensible value
+		float LockTolerance = 0.999; //TODO find sensible value
 
 	FVector LaunchDirection = FVector(0);
 
@@ -74,6 +74,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 
-	double LastFireTime = FPlatformTime::Seconds();
+	double LastFireTime = 0;
 
 };

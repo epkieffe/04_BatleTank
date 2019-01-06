@@ -61,7 +61,6 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 
 bool UTankAimingComponent::IsBarrelLocked()
 {
-	if (!ensure(Barrel)) { return false; }
 	if (FVector::DotProduct(LaunchDirection, Barrel->GetForwardVector()) > LockTolerance)
 	{
 		return true;
