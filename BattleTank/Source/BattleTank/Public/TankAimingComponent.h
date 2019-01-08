@@ -12,7 +12,8 @@ enum class EFiringState : uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutOfAmmo
 };
 
 //Forward Declarations
@@ -43,6 +44,9 @@ public:
 		void Fire();
 
 	bool IsBarrelLocked();
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+		int GetAmmoCount() const;
 
 protected:
 	virtual void BeginPlay() override;
@@ -75,5 +79,7 @@ private:
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	double LastFireTime = 0;
+
+	int AmmoCount = 10;
 
 };

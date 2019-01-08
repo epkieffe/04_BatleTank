@@ -36,13 +36,19 @@ void UTankAimingComponent::TickComponent(float DeltaTime,
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	if (!ensure(Barrel)) { return; }
-	if ((FPlatformTime::Seconds() - LastFireTime) < Barrel->CooldownSeconds)
+	if (AmmoCount < 1) { FiringState = EFiringState::OutOfAmmo; }
+	else if ((FPlatformTime::Seconds() - LastFireTime) < Barrel->CooldownSeconds)
 	{
 		FiringState = EFiringState::Reloading;
 	}
 	else if (IsBarrelLocked()) { FiringState = EFiringState::Locked; }
 	else { FiringState = EFiringState::Aiming; }
 	
+}
+
+int UTankAimingComponent::GetAmmoCount() const
+{
+	return AmmoCount;
 }
 
 /* May be useful for swapping barrels
@@ -109,7 +115,7 @@ void UTankAimingComponent::Fire()
 	if (!ensure(Barrel)) { return; }
 	if (!ensure(ProjectileBlueprint)) { return; }
 
-	if (FiringState != EFiringState::Reloading)
+	if (FiringState == EFiringState::Locked || FiringState == EFiringState::Aiming)
 	{
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBlueprint,
@@ -122,5 +128,6 @@ void UTankAimingComponent::Fire()
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 		FiringState = EFiringState::Reloading;
+		AmmoCount--;
 	}
 }
