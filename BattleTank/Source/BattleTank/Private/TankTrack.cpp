@@ -24,7 +24,7 @@ void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UP
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	CurrentThrottle = FMath::Clamp(CurrentThrottle + Throttle, -1.f, 1.f);
+	CurrentThrottle = FMath::Clamp(CurrentThrottle + Throttle, -1.5f, 1.5f);
 }
 
 void UTankTrack::DriveTrack()
@@ -47,13 +47,6 @@ void UTankTrack::ApplySideForce()
 
 	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 	auto CorrectionForce = TankRoot->GetMass() * CorectionAcceleration;
-	/*DrawDebugLine(GetWorld(), TankRoot->GetComponentLocation(),
-		TankRoot->GetComponentLocation() + CorrectionForce,
-		FColor(255, 0, 0),
-		false,
-		0.1f,
-		0,
-		10);*/
 	
 	TankRoot->AddForce(CorrectionForce);
 }
