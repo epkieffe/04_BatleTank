@@ -35,14 +35,14 @@ void UTankAimingComponent::TickComponent(float DeltaTime,
 	FActorComponentTickFunction *ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	
+	if (!ensure(Barrel)) { return; }
 	if ((FPlatformTime::Seconds() - LastFireTime) < Barrel->CooldownSeconds)
 	{
 		FiringState = EFiringState::Reloading;
 	}
 	else if (IsBarrelLocked()) { FiringState = EFiringState::Locked; }
 	else { FiringState = EFiringState::Aiming; }
-	//UE_LOG(LogTemp, Warning, TEXT("%s firing state: %f"), *GetOwner()->GetName(), FVector::DotProduct(LaunchDirection, Barrel->GetForwardVector()))
+	
 }
 
 /* May be useful for swapping barrels
@@ -61,6 +61,7 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 
 bool UTankAimingComponent::IsBarrelLocked()
 {
+	if (!ensure(Barrel)) { return false; }
 	if (FVector::DotProduct(LaunchDirection, Barrel->GetForwardVector()) > LockTolerance)
 	{
 		return true;

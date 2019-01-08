@@ -42,6 +42,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 		void Fire();
 
+	bool IsBarrelLocked();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -62,8 +64,6 @@ private:
 		float LockTolerance = 0.999; //TODO find sensible value
 
 	FVector LaunchDirection = FVector(0);
-
-	bool IsBarrelLocked();
 
 	virtual void TickComponent(float DeltaTime,
 		enum ELevelTick TickType,

@@ -27,4 +27,22 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 		float MaxSpeed = 3200;
 	
+private:
+	UTankTrack();
+
+	float CurrentThrottle = 0;
+
+	virtual void BeginPlay() override;
+
+	void DriveTrack();
+
+	void ApplySideForce();
+
+	UFUNCTION()
+		void OnHit(UPrimitiveComponent* HitComponent,
+			AActor* OtherActor,
+			UPrimitiveComponent* OtherComponent,
+			FVector NormalImpulse,
+			const FHitResult & Hit);
+
 };
