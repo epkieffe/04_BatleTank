@@ -40,7 +40,6 @@ void UTankTrack::ApplySideForce()
 {
 	//if (!ensure(T)) { return; }
 	auto SlipSpeed = FVector::DotProduct(GetComponentVelocity(), GetRightVector());
-	UE_LOG(LogTemp, Warning, TEXT("Current Slip speed: %f"), SlipSpeed)
 
 	auto DeltaTime = GetWorld()->GetTimeSeconds();
 	auto CorectionAcceleration = -SlipSpeed / DeltaTime * GetRightVector();
