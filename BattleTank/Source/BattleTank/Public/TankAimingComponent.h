@@ -78,8 +78,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 
-	double LastFireTime = 0;
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 AmmoCount = 10;
 
-	int AmmoCount = 10;
+	double LastFireTime = 0;
 
 };
