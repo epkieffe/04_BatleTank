@@ -32,7 +32,8 @@ public:
 	UTankAimingComponent();
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-		void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
+		void Initialize(UTankBarrel* BarrelToSet,
+			UTankTurret* TurretToSet);
 
 /*	void SetBarrelReference(UTankBarrel* BarrelToSet); //may be useful for swapping barrels
 

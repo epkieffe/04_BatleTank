@@ -6,12 +6,12 @@ void  UTankBarrel::Elevate(FVector WishAngleWithDeltaTime) // encoded as yaw, pi
 {
 	float DeltaTime = WishAngleWithDeltaTime.Z;
 
+	auto RelativeElevation = GetForwardVector().Rotation().Pitch; // TODO fix relative elevation
+
 	float WishAngleClamped = FMath::Clamp(
 		WishAngleWithDeltaTime.Y,
 		MinElevationDegrees,
 		MaxElevationDegrees);
-
-	auto RelativeElevation = GetForwardVector().Rotation().Pitch; // TODO fix relative elevation
 
 	float WishOmegaClamped = FMath::Clamp(
 		(1/ DeltaTime) * (WishAngleClamped - RelativeElevation),

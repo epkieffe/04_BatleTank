@@ -16,6 +16,8 @@ class BATTLETANK_API UTankTurret : public UStaticMeshComponent
 	
 public:
 	void  Rotate(FVector WishAngleWithDeltaTime); // encoded as yaw, pitch, time
+
+	float Pitch = 0;
 	
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")

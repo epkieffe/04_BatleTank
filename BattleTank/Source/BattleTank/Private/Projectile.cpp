@@ -20,20 +20,21 @@ AProjectile::AProjectile()
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("ProjectileMovement"));
 	ProjectileMovement->bAutoActivate = false;
+
+	ImpactBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("ImpactBlast"));
+	ImpactBlast->SetupAttachment(CollisionMesh);
+	ImpactBlast->bAutoActivate = false;
+
+	BlastForce = CreateDefaultSubobject<URadialForceComponent>(FName("BlastForce"));
+	BlastForce->SetupAttachment(CollisionMesh);
 }
 
 // Called when the game starts or when spawned
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+	CollisionMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 	
-}
-
-// Called every frame
-void AProjectile::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 
 void AProjectile::LaunchProjectile(float Speed)
@@ -42,3 +43,24 @@ void AProjectile::LaunchProjectile(float Speed)
 	ProjectileMovement->Activate();
 }
 
+void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult & Hit)
+{
+	LaunchBlast->Deactivate();
+	ImpactBlast->Activate();
+	BlastForce->FireImpulse();
+	
+	SetRootComponent(ImpactBlast);
+	CollisionMesh->DestroyComponent();
+
+	FTimerHandle Timer;
+	GetWorld()->GetTimerManager().SetTimer(Timer,
+		this,
+		&AProjectile::OnTimerExpire,
+		DespawnDelay,
+		false);
+}
+
+void AProjectile::OnTimerExpire()
+{
+	Destroy();
+}

@@ -9,6 +9,7 @@
 /**
  * TankBarrel is used to limit pitch range and move the barrel
  */
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
 {
