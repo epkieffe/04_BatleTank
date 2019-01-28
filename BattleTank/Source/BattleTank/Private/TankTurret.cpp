@@ -8,14 +8,14 @@ void  UTankTurret::Rotate(FVector WishAngleWithDeltaTime) // encoded as yaw, pit
 	float CorrectedDeltaAngle = WishAngleWithDeltaTime.X - GetForwardVector().Rotation().Yaw;
 
 	// these two if statements ensure "short" travel
-	if (CorrectedDeltaAngle > 180)
+	if (FMath::Abs(CorrectedDeltaAngle) > 180)
 	{
-		CorrectedDeltaAngle = CorrectedDeltaAngle - 360;
+		CorrectedDeltaAngle = -CorrectedDeltaAngle;
 	}
-	else if (CorrectedDeltaAngle < -180)
-	{
-		CorrectedDeltaAngle = CorrectedDeltaAngle + 360;
-	}
+	//else if (CorrectedDeltaAngle < -180)
+	//{
+		//CorrectedDeltaAngle = CorrectedDeltaAngle + 360;
+	//}
 	
 	float WishOmegaClamped = FMath::Clamp(
 		(1 / DeltaTime) * CorrectedDeltaAngle,
