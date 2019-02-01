@@ -8,6 +8,8 @@ void  UTankBarrel::Elevate(FVector WishAngleWithDeltaTime) // encoded as yaw, pi
 
 	auto RelativeElevation = GetForwardVector().Rotation().Pitch; // TODO fix relative elevation
 
+	auto SocketElevation = GetSocketRotation(FName("Barrel")).Pitch;
+
 	float WishAngleClamped = FMath::Clamp(
 		WishAngleWithDeltaTime.Y,
 		MinElevationDegrees,

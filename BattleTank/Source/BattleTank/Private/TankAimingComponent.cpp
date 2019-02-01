@@ -106,6 +106,8 @@ void UTankAimingComponent::MoveWeapon(FVector LaunchDirection)
 	WishAngleWithDeltaTime.Y = LaunchDirection.Rotation().Pitch;
 	WishAngleWithDeltaTime.Z = GetWorld()->DeltaTimeSeconds;
 
+	auto SocketElevation = Turret->GetSocketRotation(FName("Barrel")).Pitch;
+
 	Barrel->Elevate(WishAngleWithDeltaTime);
 	Turret->Rotate(WishAngleWithDeltaTime);
 }

@@ -18,6 +18,14 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
+	// called by engine when actor takes damage
+	virtual float TakeDamage(
+		float DamageAmount,
+		struct FDamageEvent const & DamageEvennt,
+		class AController * EventInstigator,
+		AActor * DamageCauser
+	) override;
+
 /*	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void SetBarrelReference(UTankBarrel* BarrelToSet); // may be useful for swapping barrels
 
@@ -26,5 +34,11 @@ public:
 
 private:	
 	virtual void BeginPlay()  override;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		int32 StartingHealth = 100;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Health")
+		int32 CurrentHealth = StartingHealth;
 
 };

@@ -23,7 +23,5 @@ void  UTankTurret::Rotate(FVector WishAngleWithDeltaTime) // encoded as yaw, pit
 		-MaxDegreesPerSecond,
 		MaxDegreesPerSecond);
 
-	//UE_LOG(LogTemp, Warning, TEXT("Current wish angle: %f"), CorrectedDeltaAngle)
-
 	AddRelativeRotation(FRotator(0, WishOmegaClamped * DeltaTime, 0));
 }
