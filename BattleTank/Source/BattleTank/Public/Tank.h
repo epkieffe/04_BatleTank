@@ -8,6 +8,7 @@
 
 //Forward Declarations
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -26,6 +27,8 @@ public:
 	// returns percentage of health wrt starting health range [0.f, 1,f]
 	UFUNCTION(BlueprintPure, Category = "Health")
 		float GetHealthPercent() const;
+
+	FTankDelegate OnDeath;
 
 /*	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void SetBarrelReference(UTankBarrel* BarrelToSet); // may be useful for swapping barrels
