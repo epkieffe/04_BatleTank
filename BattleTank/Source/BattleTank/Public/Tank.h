@@ -15,9 +15,6 @@ class BATTLETANK_API ATank : public APawn
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this pawn's properties
-	ATank();
-
 	// called by engine when actor takes damage
 	virtual float TakeDamage(
 		float DamageAmount,
@@ -26,6 +23,10 @@ public:
 		AActor * DamageCauser
 	) override;
 
+	// returns percentage of health wrt starting health range [0.f, 1,f]
+	UFUNCTION(BlueprintPure, Category = "Health")
+		float GetHealthPercent() const;
+
 /*	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void SetBarrelReference(UTankBarrel* BarrelToSet); // may be useful for swapping barrels
 
@@ -33,6 +34,9 @@ public:
 		void SetTurretReference(UTankTurret* TurretToSet);*/
 
 private:	
+	// Sets default values for this pawn's properties
+	ATank();
+
 	virtual void BeginPlay()  override;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")

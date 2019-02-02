@@ -33,6 +33,11 @@ float ATank::TakeDamage(
 	return DamageToApply;
 }
 
+float ATank::GetHealthPercent() const
+{
+	return (float)CurrentHealth / (float)StartingHealth;
+}
+
 /* may be useful for swapping barrels
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
