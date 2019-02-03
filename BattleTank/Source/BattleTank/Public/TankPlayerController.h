@@ -34,6 +34,11 @@ public:
 		float LineTraceRange = 1000000;
 
 private:
+	virtual void SetPawn(APawn* InPawn) override;
+
+	UFUNCTION()
+		void OnPossessedTankDeath();
+
 	void AimTowardsCrosshair();
 	bool GetSightRayHitLocation(FVector &HitLocation) const;
 	bool GetTraceDirection(FVector2D ScreenLocation, FVector& TraceDirection) const;
