@@ -20,6 +20,7 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::BeginPlay()
 {
+	Super::BeginPlay();
 	FiringState = EFiringState::Reloading;
 }
 
