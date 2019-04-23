@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Runtime/Engine/Classes/PhysicsEngine/PhysicsConstraintComponent.h"
 #include "Runtime/Engine/Classes/Components/PrimitiveComponent.h"
+#include "Runtime/Engine/Classes/Components/SphereComponent.h"
 #include "SpringBumper.generated.h"
 
 UCLASS()
@@ -28,9 +29,15 @@ private:
 	void SetupConstraint();
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-		UStaticMeshComponent* Bumper = nullptr;
+		USphereComponent* Bumper = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-		UPhysicsConstraintComponent* Spring = nullptr;
+		USphereComponent* Axle = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+		UPhysicsConstraintComponent* SpringConstraint = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+		UPhysicsConstraintComponent* WheelConstraint = nullptr;
 	
 };
